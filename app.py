@@ -4,9 +4,8 @@ from card import bp as cardbp
 from visitor import bp as visitorbp, mail
 from models import *
 import os
-from dotenv import load_dotenv 
-from create_superuser import create_superuser
-from werkzeug.security import check_password_hash
+from dotenv import load_dotenv
+from werkzeug.security import check_password_hash, generate_password_hash
 from helper import login_required_admin
 
 
@@ -40,6 +39,26 @@ mail.init_app(app)
 # إنشاء مجلد رفع الصور لو غير موجود
 # --------------------------------------
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+
+
+def create_superuser():
+    name = os.getenv("admin_username")
+    email = os.getenv("MAIL_USERNAME")
+    password = os.getenv("admin_password")  # غيّره لكلمة قوية
+    event_time = datetime.strptime("2025-12-31", "%Y-%m-%d")
+
+    # تحقق لو موجود بالفعل
+    existing_admin = Admin.query.filter_by(email=email).first()
+    if existing_admin:
+        print("⚠️ الـ Superuser موجود بالفعل.")
+        return
+
+    hashed_password = generate_password_hash(password)
+    admin = Admin(name=name, email=email, password=hashed_password)  # type: ignore
+
+    db.session.add(admin)
+    db.session.commit()
+    print("✅ Superuser تم إنشاؤه بنجاح.")
 
 
 @app.route("/")
@@ -89,4 +108,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()  # ينشئ الجداول لو مش موجودة
         create_superuser()
-    app.run(debug=True, port=2222)
+    app.run()
