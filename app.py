@@ -48,7 +48,7 @@ def create_superuser():
     event_time = datetime.strptime("2025-12-31", "%Y-%m-%d")
 
     # تحقق لو موجود بالفعل
-    existing_admin = Admin.query.filter_by(email=email).first()
+    existing_admin = Admin.query.filter_by(name=name).first()
     if existing_admin:
         print("⚠️ الـ Superuser موجود بالفعل.")
         return
