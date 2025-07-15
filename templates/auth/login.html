@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+تسجيل الدخول
+{% endblock %}
+
+{% block content %}
+<div class="container my-5" dir="rtl">
+    <!-- رسائل تنبيه -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger text-center" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- نموذج تسجيل الدخول -->
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+        <form action="{{ url_for('auth.login') }}" method="post"
+              class="p-4 rounded shadow bg-light w-100" style="max-width: 400px;">
+
+            <h2 class="h4 mb-4 text-center fw-bold text-primary">تسجيل الدخول</h2>
+
+            <!-- البريد الإلكتروني -->
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control text-end" id="floatingEmail"
+                       placeholder="name@example.com" name="event_email" required>
+                <label for="floatingEmail">البريد الإلكتروني</label>
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control text-end" id="floatingPassword"
+                       placeholder="كلمة المرور" name="event_password" required>
+                <label for="floatingPassword">كلمة المرور</label>
+            </div>
+
+            <!-- زر الدخول -->
+            <div class="d-grid">
+                <button class="btn btn-secondary btn-lg" type="submit">
+                    تسجيل الدخول
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

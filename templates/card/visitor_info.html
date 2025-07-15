@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}معلومات الزوار{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>الزوار المسجلين</h2>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>الصورة</th>
+                    <th>الاسم</th>
+                    <th>البريد الإلكتروني</th>
+                    <th>الهاتف</th>
+                    <th>تاريخ التسجيل</th>
+                    <th>الحالة</th>
+                    <th>الحضور</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visitor in visitors %}
+                <tr>
+                    <td>
+                        {% if visitor.image_filename %}
+                        <img src="{{ url_for('static', filename='uploads/' + visitor.image_filename) }}" 
+                             alt="صورة الزائر" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                        {% else %}
+                        <span class="text-muted">لا توجد صورة</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ visitor.full_name }}</td>
+                    <td>{{ visitor.email }}</td>
+                    <td>{{ visitor.phone }}</td>
+                    <td>{{ visitor.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        {% if visitor.confirmed %}
+                            <span class="badge bg-success">مؤكد</span>
+                        {% else %}
+                            <span class="badge bg-warning">غير مؤكد</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if visitor.attended %}
+                            <span class="badge bg-success">حضر</span>
+                        {% else %}
+                            <span class="badge bg-secondary">لم يحضر</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if not visitors %}
+    <p class="text-center text-muted mt-4">لا يوجد زوار مسجلين حتى الآن</p>
+    {% endif %}
+    
+    <a href="{{ url_for('card.event_dashboard') }}" class="btn btn-secondary mt-3">العودة للوحة التحكم</a>
+</div>
+{% endblock %}

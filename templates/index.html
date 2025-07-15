@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+الرئيسية 
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+     <!-- رسائل التنبيه -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert  text-center" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- عنوان الصفحة -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary fw-bold">مرحباً بك في صانع الدعوات الإلكترونية</h1>
+        <p class="lead text-muted">أنشئ مناسبتك وشارك الدعوات بكل سهولة</p>
+    </div>
+
+    <!-- زر إنشاء حدث جديد -->
+    <div class="text-center mb-4">
+        <a href="{{ url_for('auth.event_register') }}" class="btn btn-secondary btn-lg shadow">
+            <i class="bi bi-plus-square-fill me-2"></i> إضافة حدث جديد
+        </a>
+    </div>
+
+    <!-- قائمة الأحداث -->
+    {% if events %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for event in events %}
+        
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ event.name }}</h5>
+                    <a href="{{ url_for('card.event_dashboard') }}" class="btn btn-outline-primary mt-2">عرض الحدث</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center mt-4">
+        لا توجد أحداث حالياً. قم بإنشاء حدث جديد للبدء.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

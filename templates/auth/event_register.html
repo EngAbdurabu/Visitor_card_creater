@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+تسجيل مناسبة جديدة
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5 text-primary fw-bold"> إنشاء حساب مناسبة</h1>
+        <p class="lead text-muted">ابدأ بتنظيم مناسبتك وإرسال الدعوات بسهولة</p>
+    </div>
+
+    <div class="d-flex justify-content-center" dir="rtl">
+        <form method="post" action="{{ url_for('auth.event_register') }}"
+              class="p-4 rounded shadow bg-light w-100" style="max-width: 450px;">
+
+            <!-- اسم المناسبة -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control text-end" id="eventName"
+                       placeholder="اسم المناسبة" name="event_name" required>
+                <label for="eventName">اسم المناسبة</label>
+            </div>
+
+            <!-- البريد الإلكتروني -->
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control text-end" id="eventEmail"
+                       placeholder="البريد الإلكتروني" name="event_email" required>
+                <label for="eventEmail">البريد الإلكتروني</label>
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control text-end" id="eventPassword"
+                       placeholder="كلمة المرور" name="event_password" required>
+                <label for="eventPassword">كلمة المرور</label>
+            </div>
+
+            <!-- تاريخ المناسبة -->
+            <div class="form-floating mb-4">
+                <input type="date" class="form-control text-end" id="eventDate"
+                       placeholder="تاريخ المناسبة" name="event_time" required>
+                <label for="eventDate">تاريخ المناسبة</label>
+            </div>
+
+            <!-- زر التسجيل -->
+            <div class="d-grid">
+                <button class="btn btn-secondary btn-lg" type="submit">
+                    إنشاء الحساب
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

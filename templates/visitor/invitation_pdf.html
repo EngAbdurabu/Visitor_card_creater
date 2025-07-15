@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .invitation-card {
+            background: white;
+            border: 2px solid #gold;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        img {
+        display: block;               /* يجعل العنصر بلوكيًا */
+        margin: 5px auto;             /* auto من الجهتين الجانبيتين لتمركز العنصر */
+        max-width: 150px;
+        max-height: 100px;
+        border-radius: 50%;
+        }
+        .event-name {
+            font-size: 28px;
+            color: #333;
+            margin: 20px 0;
+        }
+        .message {
+            font-size: 18px;
+            color: #444;
+            margin: 20px 0;
+            text-align: justify;
+            white-space: pre-wrap; /* لعرض الأسطر كما هي */
+            line-height: 1.8;
+            direction: rtl;
+        }
+        .visitor-info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: right;
+        }
+        .qr-code {
+            margin: 30px 0;
+        }
+        .qr-code img {
+            width: 200px;
+            height: 200px;
+        }
+        .instructions {
+            text-align: right;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .instructions h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .instructions ol {
+            text-align: right;
+            padding-right: 20px;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 14px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="invitation-card">
+        <div class="header">
+            {% if card_image %}
+            <img src="{{ card_image }}" alt="شعار الحدث">
+            {% endif %}
+        </div>
+        
+        <h1 class="event-name">{{ event.name }}</h1>
+        
+        <p class="message">{{ card.message }}</p>
+
+        
+        <div class="visitor-info">
+            <h3>بيانات الضيف</h3>
+            {% if visitor_image %}
+            <img src="{{visitor_image}}" alt="صورة الزائر " >
+            {% endif %}
+            <p><strong>الاسم:</strong> {{ visitor.full_name }}</p>
+            <p><strong>البريد الإلكتروني:</strong> {{ visitor.email }}</p>
+            <p><strong>رقم الهاتف:</strong> {{ visitor.phone }}</p>
+            <p><strong>تاريخ الحدث:</strong> {{ event.event_time.strftime('%Y-%m-%d %H:%M') }}</p>
+        </div>
+        
+        <div class="qr-code">
+            <h3>رمز الدخول QR</h3>
+            {% if qr_image %}
+            <img src="{{ qr_image }}" alt="QR Code">
+            {% endif %}
+            <p>يُرجى إبراز هذا الرمز عند الدخول</p>
+        </div>
+        <div class="footer">
+            <p>نتطلع لرؤيتكم في الحدث</p>
+            <p>{{ event.name }} &copy; 2025</p>
+        </div>
+    </div>
+</body>
+</html>

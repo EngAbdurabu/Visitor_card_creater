@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}دعوات البطاقة{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>دعوات البطاقة: {{ card.name }}</h2>
+    <p>عدد الدعوات: {{ card.card_no }}</p>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>رابط الدعوة</th>
+                    <th>الحالة</th>
+                    <th>الزائر</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for invitation in invitations %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" 
+                               value="{{ url_for('visitor.register', token=invitation.unique_token, _external=True) }}" 
+                               readonly>
+                    </td>
+                    <td>
+                        {% if invitation.is_used %}
+                            <span class="badge bg-success">مستخدمة</span>
+                        {% else %}
+                            <span class="badge bg-warning">غير مستخدمة</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if invitation.visitor %}
+                            {{ invitation.visitor.full_name }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary copy-btn" 
+                                data-url="{{ url_for('visitor.register', token=invitation.unique_token, _external=True) }}">
+                            نسخ الرابط
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <a href="{{ url_for('card.card_show') }}" class="btn btn-secondary">العودة</a>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const url = this.getAttribute('data-url');
+        navigator.clipboard.writeText(url).then(() => {
+            this.textContent = 'تم النسخ!';
+            setTimeout(() => {
+                this.textContent = 'نسخ الرابط';
+            }, 2000);
+        });
+    });
+});
+</script>
+{% endblock %}

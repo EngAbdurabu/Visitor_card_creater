@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}إرسال الدعوات{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>إرسال دعوات: {{ card.name }}</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5>إدخال عناوين البريد الإلكتروني</h5>
+            <p>أدخل عنوان بريد إلكتروني واحد في كل سطر</p>
+            
+            <form id="sendInvitationsForm">
+                <div class="mb-3">
+                    <textarea class="form-control" id="emails" rows="10" 
+                              placeholder="example1@email.com&#10;example2@email.com&#10;example3@email.com"></textarea>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>ملاحظة:</strong> لديك {{ available_invitations }} دعوة غير مستخدمة
+                </div>
+                
+                <button type="submit" class="btn btn-primary">إرسال الدعوات</button>
+                <a href="{{ url_for('card.show_invitations', card_id=card.id) }}" class="btn btn-secondary">إلغاء</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('sendInvitationsForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const emailsText = document.getElementById('emails').value;
+    const emails = emailsText.split('\n').filter(email => email.trim() !== '');
+    
+    if (emails.length === 0) {
+        alert('يرجى إدخال عنوان بريد إلكتروني واحد على الأقل');
+        return;
+    }
+    
+    try {
+        const response = await fetch('{{ url_for("card.send_invitations", card_id=card.id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ emails: emails })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            alert(`تم إرسال ${data.sent} دعوة بنجاح!`);
+            window.location.href = '{{ url_for("card.show_invitations", card_id=card.id) }}';
+        } else {
+            alert(`خطأ: ${data.error}`);
+        }
+    } catch (error) {
+        alert('حدث خطأ في إرسال الدعوات');
+    }
+});
+</script>
+{% endblock %}

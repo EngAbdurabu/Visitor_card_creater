@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}عرض البطاقات{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>البطاقات المُنشأة</h2>
+    
+    <div class="row">
+        {% for card in cards %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if card.image_filename %}
+                <img src="{{ url_for('static', filename='uploads/' + card.image_filename) }}" 
+                     class="card-img-top" alt="صورة البطاقة" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ card.name }}</h5>
+                    <p class="card-text text-end white-space-pre-line">{{ card.message[:100] }}...</p>
+                                        <ul class="list-unstyled">
+                        <li><strong>عدد الدعوات:</strong> {{ card.card_no }}</li>
+                        <li><strong>التاريخ:</strong> {{ card.event_time.strftime('%Y-%m-%d | %I:%M %p') }}</li>
+                        <li><strong>الدعوات المستخدمة:</strong> 
+                            {{ card.invitations|selectattr('is_used')|list|length }} من {{ card.card_no }}
+                        </li>
+                    </ul>
+                    <a href="{{ url_for('card.show_invitations', card_id=card.id) }}" 
+                    class="btn btn-primary">عرض الدعوات</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <a href="{{ url_for('card.event_dashboard') }}" class="btn btn-secondary">العودة للوحة التحكم</a>
+</div>
+{% endblock %}

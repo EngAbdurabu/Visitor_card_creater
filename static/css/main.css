@@ -1,0 +1,30 @@
+body{
+    height: 100%;
+    background-color: #f8f9fa;
+}
+footer{
+    margin-top:20px;
+    text-align: center;
+    background-color: #0d6efd;
+    padding:10px;
+    color:snow;
+
+
+}
+footer>h5{
+    margin: 5px auto;
+}
+button>a{
+    text-decoration: none;
+    color:snow;
+}
+.edit{
+    text-decoration: none;
+    font-weight:300px;
+    color:#0f0f0f;
+    font-size:medium;
+
+}
+.white-space-pre-line {
+    white-space: pre-line;
+}

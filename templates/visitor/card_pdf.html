@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial; text-align: center; padding: 30px; }
+        .info { text-align: right; margin: 20px; }
+        img { max-width: 200px; display: block; margin: 10px auto; }
+    </style>
+</head>
+<body>
+    <h2>بطاقة الزائر</h2>
+    <div class="info">
+        <h4> شكراً لك {{visitor.full_name}} لقبول دعوتنا الخاصة بامناسبه عرض منتجنا الجديد </h4>
+        <img src="{{ qr_path }}" alt="QR Code">
+        <p><strong>الاسم:</strong> {{ visitor.full_name }}</p>
+        <p><strong>البريد:</strong> {{ visitor.email }}</p>
+        <p><strong>الهاتف:</strong> {{ visitor.phone }}</p>
+        <p><strong>تاريخ التسجيل:</strong> {{ visitor.created_at.strftime('%Y-%m-%d %I:%M') }}</p>
+        <p class="card-text text-end white-space-pre-line">{{card.message}}</p> <!-- Review -->
+    </div>
+    <img src="{{ image_path }}" alt="image ">
+    <img src="{{ qr_path }}" alt="QR Code">
+</body>
+</html>

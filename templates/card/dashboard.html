@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}لوحة التحكم{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>لوحة تحكم الحدث: {{ event.name }}</h1>
+    
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">البطاقات</h5>
+                    <p class="card-text display-4">{{ cards|length }}</p>
+                    <a href="{{ url_for('card.card_maker') }}" class="btn btn-primary">إنشاء بطاقة</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">إجمالي الدعوات</h5>
+                    <p class="card-text display-4">{{ cards|sum(attribute='card_no') }}</p>
+                    <a href="{{ url_for('card.card_show') }}" class="btn btn-info">عرض البطاقات</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">الزوار المسجلين</h5>
+                    <p class="card-text display-4">{{ event.visitors|length }}</p>
+                    <a href="{{ url_for('card.visitor_info') }}" class="btn btn-success">معلومات الزوار</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">ماسح QR</h5>
+                    <i class="fas fa-qrcode display-4"></i>
+                    <br><br>
+                    <a href="{{ url_for('card.qr_scanning') }}" class="btn btn-warning">فتح الماسح</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h3>معلومات الحدث</h3>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>اسم الحدث:</strong> {{ event.name }}</li>
+            <li class="list-group-item"><strong>البريد الإلكتروني:</strong> {{ event.email }}</li>
+            <li class="list-group-item"><strong>تاريخ الحدث:</strong> {{ event.event_time.strftime('%Y-%m-%d') }}</li>
+        </ul>
+    </div>
+    
+   <div class="mt-4 d-flex gap-2">
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-warning">تسجيل الخروج</a>
+    {% if g.admin %}
+    <form action="{{ url_for('auth.delete_all_data') }}" method="post" onsubmit="return confirm('هل أنت متأكد من حذف كل البيانات؟');">
+        <button type="submit" class="btn btn-danger">🗑️ حذف كل البيانات</button>
+    </form>
+    {% endif %}
+</div>
+
+    <!-- رسائل التنبيه -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert  text-center" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}
+تسجيل مناسبة جديدة 
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5 text-primary fw-bold">مرحباً بك في صانع الدعوات الإلكترونية</h1>
+        <p class="lead text-muted">قم بإضافة مناسبة جديدة وابدأ بإنشاء الدعوات</p>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center" dir="rtl">
+        <form method="post" action="{{ url_for('card.card_maker') }}"
+              enctype="multipart/form-data"
+              class="p-4 rounded shadow bg-light w-100"
+              style="max-width: 500px;">
+
+            <h2 class="h4 mb-4 text-center fw-bold">إنشاء دعوة</h2>
+
+            <!-- اسم المناسبة -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control text-end" id="eventName" placeholder="اسم المناسبة" name="event_name" required>
+                <label for="eventName">اسم المناسبة</label>
+            </div>
+
+            <!-- محتوى الدعوة -->
+            <div class="mb-3">
+                <label for="message" class="form-label fw-semibold">محتوى الدعوة</label>
+                <textarea class="form-control text-end" id="message" name="message" rows="4" placeholder="اكتب محتوى الدعوة هنا..." required></textarea>
+            </div>
+
+            <!-- عدد الدعوات -->
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control text-end" id="cardCount" placeholder="عدد الدعوات" name="card_no" min="20" max="1000" required>
+                <label for="cardCount">عدد الدعوات</label>
+            </div>
+
+            <!-- تاريخ المناسبة -->
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control text-end" id="eventDate" name="event_time" required>
+                <label for="eventDate">تاريخ المناسبة</label>
+            </div>
+
+            <!-- شعار المناسبة -->
+            <div class="mb-3">
+                <label for="photo" class="form-label fw-semibold">شعار المناسبة أو الشركة</label>
+                <input type="file" class="form-control text-end" id="photo" name="photo" accept="image/*">
+            </div>
+
+            <!-- زر التسجيل -->
+            <div class="d-grid mt-4">
+                <button class="btn btn-secondary btn-lg" type="submit">
+                    إنشاء الدعوة
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="text-center">
+        <p id="result" class="text-success fw-bold"></p>
+
+        <!-- زر الرجوع -->
+        <a href="{{ url_for('card.event_dashboard') }}" class="btn btn-outline-secondary mt-3">
+            🔙 العودة للوحة التحكم
+        </a>
+    </div>
+</div>
+{% endblock %}

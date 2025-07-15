@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}التحقق من البريد{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">التحقق من البريد الإلكتروني</h2>
+    <p>تم إرسال رمز تحقق إلى بريدك الإلكتروني. يرجى إدخاله أدناه:</p>
+
+    <form method="post">
+        <div class="mb-3">
+            <label for="otp" class="form-label">رمز التحقق (OTP)</label>
+            <input type="text" name="otp" class="form-control text-end" required maxlength="6" />
+        </div>
+        <button type="submit" class="btn btn-primary">تحقق</button>
+    </form>
+</div>
+{% endblock %}

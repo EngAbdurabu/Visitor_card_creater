@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}
+تسجيل زائر 
+{% endblock %}
+
+
+{% block content %}
+<h1> مرحباً الى صانع الدعوات الالكترونية  </h1>
+<div class="d-flex justify-content-center align-items-center min-vh-100" dir="rtl">
+        <form dir="rtl" method="post" action="{{url_for('visitor.index')}}"  enctype="multipart/form-data" class="p-4 rounded shadow bg-light" style="width: 100%; max-width: 400px;"> 
+            <h2 class="h3 mb-4 text-center fw-bold"> 
+                أنشاء الحساب 
+            </h2> 
+            <!-- اسم المستخدم -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control text-end" id="floatingUsername" placeholder="أسم الضيف " name="full_name">
+                <label for="floatingUsername">أسم الضيف </label>
+            </div>
+
+            <!-- البريد الإلكتروني -->
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control text-end" id="floatingEmail" placeholder="name@example.com" name="email">
+                <label for="floatingEmail">البريد الإلكتروني</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control text-end" id="phone" placeholder="رقم الهاتف " name="phone">
+                <label for="floatingUsername">
+                    رقم الهاتف 
+                </label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control text-end" id="floatingUsername" placeholder="صورة الضيف" name="photo"  />
+                <label for="floatingUsername">
+                    صورة الضيف 
+                </label>
+            </div>
+            <input type="hidden" name="event_id" value="{{event.id}}">
+
+            <!-- زر التسجيل -->
+            <div class="d-grid">
+                <button class="btn btn-primary w-100 py-2" type="submit">
+                    أنشاء الحساب 
+                </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
