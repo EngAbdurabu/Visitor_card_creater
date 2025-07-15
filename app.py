@@ -43,9 +43,7 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 def create_superuser():
     name = os.getenv("admin_username")
-    email = os.getenv("MAIL_USERNAME")
     password = os.getenv("admin_password")  # غيّره لكلمة قوية
-    event_time = datetime.strptime("2025-12-31", "%Y-%m-%d")
 
     # تحقق لو موجود بالفعل
     existing_admin = Admin.query.filter_by(name=name).first()
@@ -53,8 +51,8 @@ def create_superuser():
         print("⚠️ الـ Superuser موجود بالفعل.")
         return
 
-    hashed_password = generate_password_hash(password)
-    admin = Admin(name=name, email=email, password=hashed_password)  # type: ignore
+    hashed_password = generate_password_hash(password)  # type: ignore
+    admin = Admin(name=name, password=hashed_password)  # type: ignore
 
     db.session.add(admin)
     db.session.commit()
